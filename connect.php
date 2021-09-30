@@ -1,4 +1,5 @@
-<?php
+
+  <?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -23,20 +24,22 @@ $conn = mysqli_connect($servername,$username, $password ,$dbname);
 // }
 
 // check
-if(mysqli_connect_error()){
-  echo "Failed to connect DB";
-  exit();
-}
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+} 
 
 $query = "SELECT * FROM products";
-$result = mysql_query($query);
 
-echo "<table>"; // start a table tag in the HTML
+$result = $conn->query($sql);
 
-while($row = mysql_fetch_array($result)){   //Creates a loop to loop through results
-echo "<tr><td>" . $row['name'] . "</td><td>" . $row['age'] . "</td></tr>";  //$row['index'] the index here is a field name
+if ($result->num_rows > 0) {
+  // output data of each row
+  while($row = $result->fetch_assoc()) {
+    echo "id: " . $row["id"]. " - Name: " . $row["name"]. " " . $row["price"]. " " . $row["description"]."<br>";
+  }
+} else {
+  echo "0 results";
 }
+$conn->close();
 
-echo "</table>"; //Close the table in HTML
-echo "Connected successfully";
 ?> 
