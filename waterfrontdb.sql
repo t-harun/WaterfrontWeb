@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2021 at 11:37 PM
+-- Generation Time: Oct 12, 2021 at 07:34 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -41,18 +41,19 @@ CREATE TABLE `customer` (
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `price` int(11) NOT NULL,
-  `description` text NOT NULL
+  `price` decimal(10,2) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `price`, `description`) VALUES
-(1, 'Chicken Pesto', 10, 'Chicken Pesto Panini'),
-(2, 'Chipotle Chicken', 10, 'Spicy Chipotle Chicken Panini '),
-(3, 'Cajun Turkey', 11, 'Cajun Turkey Panini');
+INSERT INTO `products` (`id`, `name`, `price`, `description`, `image`) VALUES
+(1, 'Chicken Pesto', '10.00', 'Chicken Pesto Panini', '/chickenPesto.jpeg'),
+(2, 'Chipotle Chicken', '11.00', 'Spicy Chipotle Chicken Panini ', '/chipotleChicken.jpg'),
+(3, 'Cajun Turkey', '13.00', 'Cajun Turkey Panini', '/cajunChicken.jpg');
 
 -- --------------------------------------------------------
 
