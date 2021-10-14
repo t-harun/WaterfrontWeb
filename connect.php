@@ -1,4 +1,6 @@
 <?php
+//start session
+session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -13,6 +15,15 @@ if (!$conn) {
 
 $sql = "SELECT * FROM products";
 $result = mysqli_query($conn, $sql);
+
+if(isset($_POST['submit']) || !empty($_POST['submit'])){
+    $product_id = $_POST['product_id'];
+    $sql = "INSERT INTO shopping_cart SET
+        product_id = '$product_id'
+    ";
+    $conn = mysqli_connect($servername, $username, $password, $dbname) or die(mysqli_error());
+    $res = mysqli_query($conn,$sql)or die(mysqli_error());
+}
 ?>
 <!doctype html>
 <html>
@@ -27,23 +38,22 @@ $result = mysqli_query($conn, $sql);
 <div class = "col-md">
     <div class="row">
         <h2 class = "text-center">Top Products</h2><br><br>
+        <a href="cart.php" class="btn btn-white">Buy</a>
         <?php
             while($row = mysqli_fetch_array($result)):
         ?>
+        <form action="connect.php" method="POST">
         <div class="col-md">
-            <h4><?= $row['name'];?></h4>
-            <img class="img-fluid img-thumbnail"src="<?= $row['image'];?>" alt="<?= $row['image'];?>">
-            <p class="">$<?= $row['price'];?></p>
-            <p><?= $row['description'];?></p>
-            <button class="btn btn-success">Add to Cart</button>
+                <h4><?= $row['name'];?></h4>
+                <img class="img-fluid img-thumbnail" src="<?= $row['image'];?>" alt="<?= $row['image'];?>">
+                <p>$<?= $row['price'];?></p>
+                <p><?= $row['description'];?></p>
+                <input type="submit" name="submit" class="btn btn-success" value="Add to Cart" />
+                <input type="hidden" name="product_id" value="<?= $row['id'];?>">
         </div>
+        </form>
         <?php endwhile;?>
     </div>
 </div>
-<?php
-// Free result set
-mysqli_free_result($result);
-mysqli_close($conn);
-?>
 </body>
 </html>
